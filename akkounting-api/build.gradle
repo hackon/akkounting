@@ -1,0 +1,17 @@
+apply from: "$rootDir/gradle/dependencies.gradle"
+apply from: "$rootDir/gradle/kotlin.gradle"
+apply plugin: 'org.junit.platform.gradle.plugin'
+
+junitPlatform {
+  platformVersion '1.0.0-M3'
+  filters {
+    engines {
+      include 'spek'
+    }
+  }
+}
+
+dependencies {
+  testCompile 'org.jetbrains.spek:spek-api'
+  testRuntime 'org.jetbrains.spek:spek-junit-platform-engine'
+}

@@ -1,0 +1,32 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.9.8'
+    classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0-M3'
+  }
+}
+
+plugins {
+  id "io.spring.dependency-management" version "1.0.0.RC2"
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '3.3'
+}
+
+subprojects {
+
+  group 'com.hackon.akkounting'
+  version '0.0.1-SNAPSHOT'
+
+  repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'http://repository.jetbrains.com/repo' }
+    maven { url "https://dl.bintray.com/jetbrains/spek" }
+  }
+  apply plugin: 'idea'
+}

@@ -1,0 +1,29 @@
+apply plugin: 'io.spring.dependency-management'
+
+dependencyManagement {
+  dependencies {
+    dependency "com.google.code.gson:gson:$gsonVersion"
+    dependency "io.github.microutils:kotlin-logging:$kotlinLoggingVersion"
+
+    dependency "org.slf4j:slf4j-api:$slf4jApiVersion"
+    dependency "ch.qos.logback:logback-classic:$logbackClassicVersion"
+
+    dependency "com.nhaarman:mockito-kotlin:$mockitoKotlinVersion"
+
+    dependency "com.natpryce:hamkrest:$hamkrestVersion"
+
+    dependencySet(group: 'org.jetbrains.kotlin', version: kotlinVersion) {
+      entry 'kotlin-stdlib'
+      entry 'kotlin-reflect'
+      entry 'kotlin-runtime'
+      entry 'kotlin-test'
+      entry 'kotlin-compiler'
+      entry 'kotlin-test-junit'
+    }
+
+    dependencySet(group: 'org.jetbrains.spek', version: spekVersion) {
+      entry 'spek-api'
+      entry 'spek-junit-platform-engine'
+    }
+  }
+}
