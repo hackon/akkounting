@@ -12,6 +12,8 @@ junitPlatform {
 }
 
 dependencies {
+  testCompile 'com.nhaarman:mockito-kotlin'
+  testCompile 'org.jetbrains.kotlin:kotlin-test'
   testCompile 'org.jetbrains.spek:spek-api'
   testRuntime 'org.jetbrains.spek:spek-junit-platform-engine'
 }
