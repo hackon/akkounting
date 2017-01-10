@@ -47,41 +47,28 @@ data class Invoice(
   fun validate(): Boolean {
     val list = Invoice::class.memberProperties
         .map { it.get(this) }
-        .filterIsInstance<Validator<*>>().toList()
+        .filterIsInstance<Validator>().toList()
     return list.all { it.validate() }
   }
 }
 
-data class KidNr(val kidNr: String) : Validator<KidNr> {
+data class KidNr(val kidNr: String) : Validator {
   override fun validate() = validateKidNr(kidNr)
 }
 
-data class AccountNr(val accountNr: String) : Validator<AccountNr> {
+data class AccountNr(val accountNr: String) : Validator {
   override fun validate() = validateAccountNr(accountNr)
 
   fun regNr() = accountNr.take(4)
   fun accountType() = accountNr.substring(4, 6)
   fun accountRest() = accountNr.substring(6, 10)
   fun account() = accountType() + accountRest()
+  fun grouped() = "${regNr()}.${accountType()}.${accountRest()}"
 }
 
 
-interface Validator<T> {
+interface Validator {
   fun validate(): Boolean
 }
-
-private fun String.mod10() = 10 - this.dropLast(1)
-    .foldRightIndexed(0) { i, next, total -> total + greaterThan10(next.int() * (i % 2 + 1)) }
-    .mod(10) == this.takeLast(1).toInt()
-
-private fun String.mod11(): Boolean {
-  val weight = arrayOf(2, 3, 4, 5, 6, 7)
-  return 11 - this.dropLast(1)
-      .reversed()
-      .foldIndexed(0) { i, total, next -> total + (next.int() * weight[i % weight.size]) }
-      .mod(11) == this.takeLast(1).toInt()
-}
-
-fun greaterThan10(it: Int): Int = if (it > 9) (1 + it.mod(10)) else it
 
 fun Char.int() = this.toString().toInt()
